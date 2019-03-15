@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', function (req, res) {
   res.render('index.ejs');
 });
-
+var conString = "mongodb://<dbuser>:<dbpassword>@ds042417.mlab.com:42417/broadcast";
 
 http.listen(3000, function () {
   console.log('listening on *:3000');
