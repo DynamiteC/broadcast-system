@@ -1,0 +1,37 @@
+{
+  "name": "broadcast-system",
+  "version": "0.0.1",
+  "description": "Broadcast System using NodeJs, ExpressJs and Socket.IO",
+  "main": "app.js",
+  "scripts": {
+    "test": "snyk test",
+    "start": "node ./app.js",
+    "dev": "nodemon --watch ./app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DynamiteC/broadcast-system.git"
+  },
+  "keywords": [
+    "Broadcast",
+    "System"
+  ],
+  "author": "shethshails@gmail.com, Shail Sheth, DynamiteC, dynamitecrate@gmail.com",
+  "license": "MPL-2.0",
+  "bugs": {
+    "url": "https://github.com/DynamiteC/broadcast-system/issues"
+  },
+  "homepage": "https://github.com/DynamiteC/broadcast-system#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-session": "^1.15.6",
+    "helmet": "^3.16.0",
+    "morgan": "^1.9.1",
+    "nodemon": "^1.18.10",
+    "snyk": "^1.136.3",
+    "socket.io": "^2.2.0",
+    "sqlite3": "^4.0.6"
+  }
+}
