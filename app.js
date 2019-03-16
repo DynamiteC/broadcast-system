@@ -17,7 +17,7 @@ app.use(express.static('public'));
 app.use(bodyParser.urlencoded({
   extended: true
 }));
-
+// app.use('view engine', 'ejs');
 // Start the Server
 http.listen(port, function () {
   console.log('Server Started. Listening on *:' + port);
@@ -54,6 +54,10 @@ fs.readFile('creds.json', 'utf-8', function (err, data) {
     });
   });
 });
+
+app.get('/', function (req, res) {
+  res.render('index.ejs');
+})
 
 app.post('/join', function (req, res) {
   var username = req.body.username;
