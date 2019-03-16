@@ -1,56 +1,30 @@
-<!doctype html>
-<html lang="en">
-
-<head>
-    <title>BroadCast System</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="Broadcast System">
-    <meta name="author" content="Shail Sheth">
-    <title>Home | Broadcast System</title>
-    <link rel="icon" href="/images/favicon.ico">
-    <link rel="stylesheet" href="css/vendor.min.css">
-    <link rel="stylesheet" href="css/ie10-viewport-bug-workaround.css">
-    <!-- Compiled and minified CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <link rel="stylesheet" href="css/style.css">
-</head>
-
-<body class="black white-text">
-    <header>
-        <div class="container valign-wrapper">
+<%- include header %>
+<div class="container">
+    <div class="join-chat">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" />
+        <input type="button" id="join-chat" value="Join Chat" />
+    </div><br />
+    <div class="chat-info"></div><br />
+    <div class="chat">
+        <div class="messages"></div>
+        <textarea name="message" id="message" cols="90" rows="5" placeholder="Enter your message..."></textarea><br /><br />
+        <input type="button" id="send-message" data-username="" value="Send Message">&nbsp;
+        <input type="button" id="leave-chat" data-username="" value="Leave Chat">
+    </div>
+</div>
+<!-- <main role="main">
+    <div class="container center-align white-text">
+        <div class="row">
             <div class="row">
-                <h3 class="center-align">Broadcast System</h3>
+                <h5>What's your nickname?</h5>
             </div>
-        </div>
-    </header>
-    <main role="main">
-        <div class="container center-align white-text">
             <div class="row">
-                <div class="row">
-                    <h5>What's your nickname?</h5>
-                </div>
-                <div class="row">
-                    <div class="input-field col s6 offset-s3 center-align">
-                        <h5><input type="text" id="nickname" class="white-text" style="font-size: inherit;"></h5>
-                    </div>
+                <div class="input-field col s6 offset-s3 center-align">
+                    <h5><input type="text" id="nickname" class="white-text" style="font-size: inherit;"></h5>
                 </div>
             </div>
         </div>
-    </main>
-    <footer>
-
-    </footer>
-    <script src="js/vendor.min.js"></script>
-    <script src="js/ie-emulation-modes-warning.js"></script>
-    <script src="js/ie10-viewport-bug-workaround.js"></script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="js/script.js"></script>
-</body>
-
-
-</html>
+    </div>
+</main> -->
+<%- include footer %>
