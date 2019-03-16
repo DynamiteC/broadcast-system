@@ -9,7 +9,7 @@ var creds = '';
 
 var redis = require('redis');
 var client = '';
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 5000;
 
 // Express Middleware for serving static
 // files and parsing the request body
