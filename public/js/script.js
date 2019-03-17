@@ -141,7 +141,7 @@ $(document).ready(function () {
                 '</div></div>';
         } else {
             var html = '<div class="card grey lighten-2 black-text left-align"><div class="card-title">' +
-                response[x]['sender'] + '</div><div class="card-body">' + response[x]['message'] +
+                username + '</div><div class="card-body">' + message +
                 '</div></div>';
         }
 

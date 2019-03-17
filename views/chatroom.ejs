@@ -32,16 +32,18 @@
                         <div class="card-content white-text">
                             <div id='private_msgs' class="messages input-field left-align inFont"></div>
                             <div class="input-field col s12 valign-middle">
-                                <textarea name="message" id="brd_message" class="white-text" rows="5" placeholder="Enter your message..."></textarea><br /><br />
+                                <textarea name="message" id="prv_message" class="white-text" rows="5" placeholder="Enter your message..."></textarea><br /><br />
                                 <div class="row">
                                     <div class="col s9">
                                         <div class="col s4"><span>Recipients</span></div>
                                         <div class="col s8">
                                             <select id="recipients" style="display: inline-block;height:30px">
                                                 <% for (var x = 0; x < recipients.length; x++) { %>
-                                                <option value="<%= recipients[x].trim() %>">
-                                                    <%= recipients[x].trim() %>
-                                                </option>
+                                                    <% if (recipients[x].trim() != username) {%>
+                                                        <option value="<%= recipients[x].trim() %>">
+                                                            <%= recipients[x].trim() %>
+                                                        </option>
+                                                    <% } %>
                                                 <% } %>
                                             </select>
                                         </div>
