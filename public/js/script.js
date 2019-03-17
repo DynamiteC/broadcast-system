@@ -152,21 +152,24 @@ $(document).ready(function () {
     });
 
     $('#send_private_msg').click(function () {
-        var username = $('#recipients').val();
+        var from = $(this).data('username');
+        var to = $('#recipients').val();
         var message = $.trim($('#prv_message').val());
         $.ajax({
             url: '/send_private_msg',
             type: 'POST',
             dataType: 'json',
             data: {
-                'username': username,
-                'message': message
+                'to': to,
+                'message': message,
+                'username': from
             },
             success: function (response) {
                 if (response.status == 'OK') {
                     socket.emit('prv-message', {
-                        'username': username,
-                        'message': message
+                        'to': to,
+                        'message': message,
+                        'username': from
                     });
                     $('#prv_message').val('');
                 }
@@ -175,9 +178,10 @@ $(document).ready(function () {
     });
 
     socket.on('send_prv', function (data) {
+        var toFrom = data.to;
         var username = data.username;
         var message = data.message;
-        if (username == $.trim($('#username').html())) {
+        if (toFrom == $.trim($('#username').html())) {
             var html = '<div class="card grey lighten-2 black-text left-align"><div class="card-title">' +
                 username + '</div><div class="card-body">' + message +
                 '</div></div>';
