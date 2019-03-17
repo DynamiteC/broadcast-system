@@ -39,11 +39,11 @@
                                         <div class="col l8">
                                             <select id="recipients" style="display: inline-block;height:30px">
                                                 <% for (var x = 0; x < recipients.length; x++) { %>
-                                                    <% if (recipients[x].trim() != username) {%>
-                                                        <option value="<%= recipients[x].trim() %>">
-                                                            <%= recipients[x].trim() %>
-                                                        </option>
-                                                    <% } %>
+                                                <% if (recipients[x].trim() != username) {%>
+                                                <option value="<%= recipients[x].trim() %>">
+                                                    <%= recipients[x].trim() %>
+                                                </option>
+                                                <% } %>
                                                 <% } %>
                                             </select>
                                         </div>

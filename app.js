@@ -203,8 +203,7 @@ io.on('connection', function (socket) {
   //Fire Personal Message to Receipient
   socket.on('prv-message', function (data) {
     if (connectedUsers[data.username]) {
-      console.log(connectedUsers[data.username].id)
-      io.to(connectedUsers[data.username].id).emit("send_prv", data);
+      io.emit("send_prv", data);
     } else {
       console.log("User does not exist: " + data.username);
     }

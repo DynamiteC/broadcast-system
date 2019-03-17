@@ -152,7 +152,7 @@ $(document).ready(function () {
     });
 
     $('#send_private_msg').click(function () {
-        var username = $(this).data('username');
+        var username = $('#recipients').val();
         var message = $.trim($('#prv_message').val());
         $.ajax({
             url: '/send_private_msg',
@@ -177,12 +177,13 @@ $(document).ready(function () {
     socket.on('send_prv', function (data) {
         var username = data.username;
         var message = data.message;
-
-        var html = '<div class="card grey lighten-2 black-text left-align"><div class="card-title">' +
-            username + '</div><div class="card-body">' + message +
-            '</div></div>';
-
-        $('#private_msgs').append(html);
+        if (username == $.trim($('#username').html())) {
+            var html = '<div class="card grey lighten-2 black-text left-align"><div class="card-title">' +
+                username + '</div><div class="card-body">' + message +
+                '</div></div>';
+            console.log(html)
+            $('#private_msgs').append(html);
+        }
     });
 
     socket.on('count_chatters', function (data) {
