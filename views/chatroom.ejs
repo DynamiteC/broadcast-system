@@ -2,11 +2,11 @@
 <div class="container">
     <div class="center-align white-text">
         <div class="row">
-            <div class="col s7">
+            <div class="col l7">
                 <h5>User: <span id="username">
                         <%= username %></span></h5>
             </div>
-            <div class="col s5">
+            <div class="col l5">
                 <button class="btn btn-flat waves-effect waves-orange white-text inFont" id="sign-out" type="submit"
                     name="action">Sign out <i class="fas fa-sign-out-alt"></i>
                 </button>
@@ -14,7 +14,7 @@
         </div>
         <div class="chat">
             <div class="row">
-                <div class="col s7">
+                <div class="col l7">
                     <div class="card black white-text">
                         <div class="card-title">Broadcast Messages</div>
                         <div class="card-content white-text">
@@ -26,17 +26,17 @@
                         </div>
                     </div>
                 </div>
-                <div class="col s5">
+                <div class="col l5">
                     <div class="card black white-text">
                         <div class="card-title">Private Messages</div>
                         <div class="card-content white-text">
                             <div id='private_msgs' class="messages input-field left-align inFont"></div>
-                            <div class="input-field col s12 valign-middle">
+                            <div class="input-field col l12 valign-middle">
                                 <textarea name="message" id="prv_message" class="white-text" rows="5" placeholder="Enter your message..."></textarea><br /><br />
                                 <div class="row">
-                                    <div class="col s9">
-                                        <div class="col s4"><span>Recipients</span></div>
-                                        <div class="col s8">
+                                    <div class="col l9">
+                                        <div class="col l4"><span>Recipients</span></div>
+                                        <div class="col l8">
                                             <select id="recipients" style="display: inline-block;height:30px">
                                                 <% for (var x = 0; x < recipients.length; x++) { %>
                                                     <% if (recipients[x].trim() != username) {%>
@@ -48,7 +48,7 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col s3">
+                                    <div class="col l3">
                                         <button id="send_private_msg" data-username="<%= username %>" class="btn btn-flat btn-floating waves-effect waves-orange white-text inFont"
                                             type="submit" name="action"><i class="fas fa-paper-plane"></i>
                                         </button>
