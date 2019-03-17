@@ -46,6 +46,7 @@ var chatters = [];
 
 // Store messages in chatroom
 var chat_messages = [];
+var private_messages = [];
 fs.readFile('creds.json', 'utf-8', function (err, data) {
   if (err) throw err;
   creds = JSON.parse(data);
@@ -64,6 +65,12 @@ fs.readFile('creds.json', 'utf-8', function (err, data) {
     client.get('chat_app_messages', function (err, reply) {
       if (reply) {
         chat_messages = JSON.parse(reply);
+      }
+    });
+
+    client.get('private_app_messages', function (err, reply) {
+      if (reply) {
+        private_messages = JSON.parse(reply);
       }
     });
   });
@@ -99,8 +106,13 @@ app.post('/join', function (req, res) {
 
 app.get('/chat', function (req, res) {
   try {
-    if (req.session.userdata == undefined)
-      res.redirect('/');
+    if (req.session == null) {
+      return res.redirect('/');
+    }
+
+    if (req.session.userdata == null) {
+      return res.redirect('/');
+    }
 
     res.render('chatroom.ejs', {
       username: req.session.userdata.username,
@@ -139,8 +151,26 @@ app.post('/send_brdcst_msg', function (req, res) {
   });
 });
 
+app.post('/send_private_msg', function (req, res) {
+  var username = req.body.username;
+  var message = req.body.message;
+  private_messages.push({
+    'sender': username,
+    'message': message,
+    'time': (new Date()).getTime()
+  });
+  client.set('private_app_messages', JSON.stringify(private_messages));
+  res.send({
+    'status': 'OK'
+  });
+});
+
 app.get('/get_messages', function (req, res) {
   res.send(chat_messages);
+});
+
+app.get('/get_prv_messages', function (req, res) {
+  res.send(private_messages);
 });
 
 app.get('/get_chatters', function (req, res) {
@@ -166,23 +196,23 @@ io.on('connection', function (socket) {
       socket.handshake.session.save();
     }
   });
-  socket.on('message', function (data) {
-    io.emit('send', data);
+  socket.on('brd_message', function (data) {
+    io.emit('send_brd', data);
   });
 
+  //Fire Personal Message to Receipient
+  socket.on('prv-message', function (data) {
+    if (connectedUsers[data.username]) {
+      console.log(connectedUsers[data.username].id)
+      io.to(connectedUsers[data.username].id).emit("send_prv", data);
+    } else {
+      console.log("User does not exist: " + data.username);
+    }
+  })
   // Fire 'count_chatters' for updating Chatter Count in UI
   socket.on('update_chatter_count', function (data) {
     if (!connectedUsers[data.username])
       io.emit('count_chatters', data);
   });
 
-  //Fire Personal Message to Receipient
-  socket.on('private-message', function (data) {
-    console.log("Sending: " + data.content + " to " + data.username);
-    if (clients[data.username]) {
-      io.sockets.connected[clients[data.username].id].emit("add-message", data);
-    } else {
-      console.log("User does not exist: " + data.username);
-    }
-  })
 });
