@@ -1,8 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Inconsolata');
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
-* {
-    font-family: 'Inconsolata', monospace !important;
+.inFont {
+    font-family: 'Montserrat', sans-serif !important;
 }
+
+.messages {
+    height: 30vh;
+    overflow-y: scroll;
+    overflow-wrap: break-word;
+    text-overflow: clip;
+}
+
+.time-right {
+    float: right;
+    color: #aaa;
+  }
+  
+  /* Style time text */
+  .time-left {
+    float: left;
+    color: #999;
+  }
 
 /* * {
     margin: 0;

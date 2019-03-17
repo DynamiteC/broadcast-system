@@ -1,32 +1,19 @@
 <%- include header %>
 <div class="container">
     <div class="center-align white-text">
-        <div class="join-chat input-field col s6 offset-s3 center-align">
-            <label for="username">Username:</label>
-            <input type="text" id="username" class="white-text" name="username" />
-            <input type="button" id="join-chat" value="Join Chat" />
-        </div><br />
-        <div class="chat-info"></div><br />
-        <div class="chat">
-            <div class="messages input-field col s6 offset-s3 center-align"></div>
-            <textarea name="message" id="message" class="white-text" cols="90" rows="5" placeholder="Enter your message..."></textarea><br /><br />
-            <input type="button" id="send-message" data-username="" value="Send Message">&nbsp;
-            <input type="button" id="leave-chat" data-username="" value="Leave Chat">
+        <div class="row">
+            <h5 class="inFont">What's your nickname?</h5>
+            <div class="input-field col s6 offset-s3 center-align">
+                <h5><input type="text" id="username" class="white-text inFont" style="font-size: inherit;" placeholder="Enter New/Old Nickname"></h5>
+                <h5><input type="password" id="password" class="white-text inFont" style="font-size:inherit;"
+                        placeholder="Enter your Secret/Password"></h5>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn waves-effect waves-light white black-text inFont" id="join-chat" type="submit" name="action">Join
+                Chat <i class="fas fa-comment"></i>
+            </button>
         </div>
     </div>
 </div>
-<!-- <main role="main">
-    <div class="container center-align white-text">
-        <div class="row">
-            <div class="row">
-                <h5>What's your nickname?</h5>
-            </div>
-            <div class="row">
-                <div class="input-field col s6 offset-s3 center-align">
-                    <h5><input type="text" id="nickname" class="white-text" style="font-size: inherit;"></h5>
-                </div>
-            </div>
-        </div>
-    </div>
-</main> -->
 <%- include footer %>

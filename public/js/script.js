@@ -24,43 +24,65 @@ $(document).ready(function () {
         chatter_count = response.length; //update chatter count
     });
 
+    $.get('/get_messages', function (response) {
+        if (window.location.href.indexOf('/chat') > -1) {
+            if (response.length > 0) {
+                var message_count = response.length;
+                var html = '';
+                for (var x = 0; x < message_count; x++) {
+                    console.log($('#username').html());
+                    if (response[x]['sender'] == $.trim($('#username').html())) {
+                        html +=
+                            '<div class="card grey darken-2 white-text right-align"><div class="card-title">' +
+                            response[x]['sender'] + '</div><div class="card-body">' + response[x]['message'] +
+                            '</div></div>';
+                    } else {
+                        html +=
+                            '<div class="card grey lighten-2 black-text left-align"><div class="card-title">' +
+                            response[x]['sender'] + '</div><div class="card-body">' + response[x]['message'] +
+                            '</div></div>';
+                    }
+                }
+                $('#broadcast_msgs').html(html);
+            }
+        }
+    });
+
     $('#join-chat').click(function () {
         var username = $.trim($('#username').val());
+        var password = $.trim($('#password').val());
+        if (username == '' || password == '')
+            return;
         $.ajax({
             url: '/join',
             type: 'POST',
             data: {
-                username: username
+                username: username,
+                password: password
             },
             success: function (response) {
                 if (response.status == 'OK') { //username doesn't already exists
                     socket.emit('update_chatter_count', {
-                        'action': 'increase'
+                        'action': 'increase',
+                        'username': username
                     });
-                    $('.chat').show();
-                    $('#leave-chat').data('username', username);
-                    $('#send-message').data('username', username);
-                    $.get('/get_messages', function (response) {
-                        if (response.length > 0) {
-                            var message_count = response.length;
-                            var html = '';
-                            for (var x = 0; x < message_count; x++) {
-                                html += "<div class='msg'><div class='user'>" + response[x]['sender'] + "</div><div class='txt'>" + response[x]['message'] + "</div></div>";
-                            }
-                            $('.messages').html(html);
-                        }
+                    socket.emit('login', {
+                        username: username,
+                        password: password
                     });
-                    $('.join-chat').hide(); //hide the container for joining the chat room.
+                    setTimeout(function () {
+                        window.location.href = '/chat'
+                    }, 500);
                 } else if (response.status == 'FAILED') { //username already exists
-                    alert("Sorry but the username already exists, please choose another one");
+                    alert("Sorry but the username or password combination is incorrect, if you're new try new username");
                     $('#username').val('').focus();
                 }
             }
         });
     });
 
-    $('#leave-chat').click(function () {
-        var username = $(this).data('username');
+    $('#sign-out').click(function () {
+        var username = $('#username').html();
         $.ajax({
             url: '/leave',
             type: 'POST',
@@ -75,22 +97,23 @@ $(document).ready(function () {
                         'message': username + " has left the chat room.."
                     });
                     socket.emit('update_chatter_count', {
-                        'action': 'decrease'
+                        'action': 'decrease',
+                        'username': username
                     });
-                    $('.chat').hide();
-                    $('.join-chat').show();
-                    $('#username').val('');
+                    setTimeout(function () {
+                        window.location.href = '/logout'
+                    }, 500)
                     alert('You have successfully left the chat room');
                 }
             }
         });
     });
 
-    $('#send-message').click(function () {
+    $('#send_brdcst_msg').click(function () {
         var username = $(this).data('username');
-        var message = $.trim($('#message').val());
+        var message = $.trim($('#brd_message').val());
         $.ajax({
-            url: '/send_message',
+            url: '/send_brdcst_msg',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -103,7 +126,7 @@ $(document).ready(function () {
                         'username': username,
                         'message': message
                     });
-                    $('#message').val('');
+                    $('#brd_message').val('');
                 }
             }
         });
@@ -112,8 +135,17 @@ $(document).ready(function () {
     socket.on('send', function (data) {
         var username = data.username;
         var message = data.message;
-        var html = "<div class='msg'><div class='user'>" + username + "</div><div class='txt'>" + message + "</div></div>";
-        $('.messages').append(html);
+        if (username == $.trim($('#username').html())) {
+            var html = '<div class="card grey darken-2 white-text right-align"><div class="card-title">' +
+                username + '</div><div class="card-body">' + message +
+                '</div></div>';
+        } else {
+            var html = '<div class="card grey lighten-2 black-text left-align"><div class="card-title">' +
+                response[x]['sender'] + '</div><div class="card-body">' + response[x]['message'] +
+                '</div></div>';
+        }
+
+        $('#broadcast_msgs').append(html);
     });
     socket.on('count_chatters', function (data) {
         if (data.action == 'increase') {
@@ -123,4 +155,4 @@ $(document).ready(function () {
         }
         $('.chat-info').text("There are currently " + chatter_count + " people in the chat room");
     });
-})
+});
